@@ -3,6 +3,7 @@ import logging
 from django import template
 from django.middleware.csrf import get_token
 from django.conf import settings
+from django.core.files.storage import get_storage_class
 try:
     from django.urls import reverse
 except ImportError:
