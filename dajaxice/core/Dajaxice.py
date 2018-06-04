@@ -8,6 +8,8 @@ except ImportError:
 
 log = logging.getLogger('dajaxice')
 
+from importlib._bootstrap_external import _NamespacePath
+
 
 class DajaxiceFunction(object):
     """ Basic representation of a dajaxice ajax function."""
@@ -132,7 +134,10 @@ def dajaxice_autodiscover():
             continue
 
         try:
-            imp.find_module('ajax', app_path)
+            if isinstance(app_path, _NamespacePath):
+                imp.find_module('ajax', app_path._path)
+            else:
+                imp.find_module('ajax', app_path)
         except ImportError:
             continue
 
